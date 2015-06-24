@@ -1,4 +1,4 @@
-/********** Linked List ********/
+/********** Link List ********/
 /**
 	Definition : Like arrays, Linked List is a linear data structure.
 Unlike arrays, linked list elements are not stored at contiguous location,
@@ -115,7 +115,30 @@ void append(struct node **head, int data)
  */
 void deleteAllNodeOccurence(struct node **head, int key)
 {
-
+	struct node *tmp = *head, *prev;
+	
+	if (tmp == NULL) {
+		return;
+	}
+	if (tmp->pointer == NULL && tmp->data == key) {
+		free(tmp);
+		return;	
+	}
+	while(tmp != NULL) {
+		if (tmp->data == key) {
+			if (tmp == (*head)) {
+				*head = prev = tmp->pointer;
+			} else {
+				prev->pointer = tmp->pointer;
+			}
+			free(tmp); // Free memory
+			tmp = prev; 
+		} else {
+			prev = tmp;
+			tmp = tmp->pointer;
+		}
+		
+	}	
 }
 
 /**
@@ -128,13 +151,13 @@ void deleteAllNodeOccurence(struct node **head, int key)
 int main(void)
 {
 	struct node *head = NULL;
+	push(&head, 1); //Insert at front
 	push(&head, 5); //Insert at front
-	push(&head, 4); //Insert at front
-	push(&head, 3); //Insert at front
-	push(&head, 2); //Insert at front
+	push(&head, 6); //Insert at front
+	push(&head, 1); //Insert at front
 	push(&head, 1); //Insert at front
 	//deleteNodeOnlyFirstOccurence(&head, 3);
-	deleteAllNodeOccurence(&head, 3);
+	deleteAllNodeOccurence(&head, 1);
 	printList(head);
 	return 0;
 }
