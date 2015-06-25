@@ -17,8 +17,9 @@ the elements are linked using pointers.
 	 c. Inhere we dont use binary search like array use.
 */
 
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 /**
  * This is used to declare and define  structure
@@ -142,6 +143,41 @@ void deleteAllNodeOccurence(struct node **head, int key)
 }
 
 /**
+ * This function to get count of link list node
+ * 
+ * @param struct node instance
+ * @return int counter
+ * @author Gurbachan Singh <gurbachansingh86@gmail.com>
+ */
+int getCount(struct node *head)
+{
+	int counter = 0;
+	while (head != NULL) {
+		counter++;
+		head = head->pointer;
+	}
+	return counter;
+}
+
+/**
+ * This function is use to search key in link list
+ *
+ * @param struct node instance
+ * @return boolean true | false
+ * @author Gurbachan Singh <gurbachansingh86@gmail.com>
+ */
+bool searchKey(struct node *head, int key)
+{
+  while(head != NULL){
+  	if (head->data == key) {
+  		return true;
+  	}
+  	head = head->pointer;
+  }
+  return false;
+}
+
+/**
  * Default function of program 
  *
  * param void
@@ -151,13 +187,16 @@ void deleteAllNodeOccurence(struct node **head, int key)
 int main(void)
 {
 	struct node *head = NULL;
-	push(&head, 1); //Insert at front
-	push(&head, 5); //Insert at front
-	push(&head, 6); //Insert at front
-	push(&head, 1); //Insert at front
-	push(&head, 1); //Insert at front
-	//deleteNodeOnlyFirstOccurence(&head, 3);
-	deleteAllNodeOccurence(&head, 1);
+	append(&head, 1);
+	append(&head, 2);
+	append(&head, 3);
+	append(&head, 4);
 	printList(head);
+	printf("Count of link list node : %d\n", getCount(head));
+	if(searchKey(head, 6)) {
+		puts("Key found in list");
+	} else {
+		puts("Key not foud in list");
+	}
 	return 0;
 }
